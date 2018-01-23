@@ -1,59 +1,31 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
-import './App.css';
-/*import './node_modules/queries/httpRequest';*/
-/*import './node_modules/queries/fetch';*/
-import Menu from './components/menu';
+/*import Menu from "./components/menu";*/
+import Header from "./components/header";
+import Sidebar from "./components/sidebar/Sidebar";
+import Aside from "./components/aside";
+import Content from "./components/content";
+import Footer from "./components/footer";
 
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: []
-        }
-    }
-
-    componentDidMount() {
-        const xhr = new XMLHttpRequest();
-        xhr.open(
-            'GET',
-            'http://www.mocky.io/v2/5a193c3b300000b91e63f4a7',
-            true
-        );
-        xhr.send();
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState !== 4) {
-                return
-            }
-            console.log("finished");
-            if (xhr.status === 200) {
-                console.log('OK! result: ', JSON.parse(xhr.responseText));
-                let data = JSON.parse(xhr.responseText);
-                this.setState({
-                    data: data
-                })
-            } else {
-                console.log(`error', ${xhr.responseText}`);
-            }
-        };
-    }
-
     render() {
-        console.log('data', this.state.data);
-        /*     let info =JSON.stringify(this.state.data);*/
-        let info = this.state.data;
         return (
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo"/>
-                    <h1 className="App-title">Welcome to React</h1>
-                </header>
-                <Menu/>
-                {this.children}
-            </div>
+            <main className="main">
+                <div className="page-loader">
+                    <div className="page-loader__spinner">
+                        <svg viewBox="25 25 50 50">
+                            <circle cx={50} cy={50} r={20} fill="none" strokeWidth={2} strokeMiterlimit={10}/>
+                        </svg>
+                    </div>
+                </div>
+                <Header/>
+                <Sidebar/>
+                <Aside/>
+                <Content/>
+                <Footer/>
+            </main>
         );
     }
-}
+};
 
 export default App;

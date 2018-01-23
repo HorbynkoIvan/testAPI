@@ -1,23 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import {createStore, applyMiddleware} from 'redux'
+import {composeWithDevTools} from 'redux-devtools-extension'
+import thunk from 'redux-thunk'
+import {Provider} from 'react-redux'
+import reducers from './reducers'
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+import "./resources/static/templates/matherialadm/css/app.css"
 
-import { Router, Route, hashHistory} from 'react-router';
-import Repositorieslist from './components/repositorieslist';
-import Favoritelist from './components/favoritelist';
-import Contributorslist from './components/contributorslist';
+/*import { Router, Route, hashHistory} from 'react-router';*/
 
+const store = createStore(reducers, composeWithDevTools(
+    applyMiddleware(thunk)
+))
 
 ReactDOM.render(
-        <Router history={hashHistory}>
-            <Route exact path='/' component={App}>
-                <Route path='repositorieslist' component={Repositorieslist}/>
-                <Route path='favoritelist' component={Favoritelist}/>
-                <Route path='contributorslist' component={Contributorslist}/>
-            </Route>
-        </Router>,
+    <Provider store={store}>
+        <App/>
+    </Provider>,
     document.getElementById('root'));
 
 registerServiceWorker();
